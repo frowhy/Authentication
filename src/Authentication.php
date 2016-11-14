@@ -35,10 +35,11 @@ class Authentication
      */
     public static function make($str, $salt = '')
     {
+        $DES3 = new DES3();
         $time = TimeMillis::getTimeMillis();
         $timeHash = password_hash($time, PASSWORD_BCRYPT);
         $timeHashEncode = base64_encode($timeHash);
-        $sign = base64_encode(Mcrypt::encrypt($str, $salt));
+        $sign = $DES3->setKey($salt)->encrypt($str);
         $merge = $time . $timeHashEncode . $sign . $salt;
         $num = strlen($merge);
         for ($i = 0; $i < $num; $i++) {
@@ -84,6 +85,7 @@ class Authentication
         if (!$token) {
             return false;
         }
+        $DES3 = new DES3();
         $stringDeCode = base64_decode($token);
         $num = strlen($stringDeCode);
         for ($i = 0; $i < $num; $i++) {
@@ -92,10 +94,10 @@ class Authentication
         ksort($array);
         $string = implode('', $array);
         $saltLen = strlen($salt);
-        $mcryptSalt = substr($string, $num - $saltLen, $num);
-        $mcrypt = base64_decode(substr($string, 93, $num - $saltLen - 93));
-        $sign = Mcrypt::decrypt($mcrypt, $mcryptSalt);
-//        var_dump(['$mcrypt' => $mcrypt, '$mcryptSalt' => $mcryptSalt, '$sign' => $sign]);
+        $DES3Salt = substr($string, $num - $saltLen, $num);
+        $DES3Str = substr($string, 93, $num - $saltLen - 93);
+        $sign = $DES3->setKey($DES3Salt)->decrypt($DES3Str);
+//        var_dump(['$DES3Str' => $DES3Str, '$DES3Salt' => $DES3Salt, '$sign' => $sign]);
         return $sign;
     }
 }
