@@ -1,0 +1,25 @@
+{
+  "name": "frowhy/authentication",
+  "license": "MIT",
+  "description": "鉴权类",
+  "type": "library",
+  "homepage": "https://github.com/frowhy/Authentication",
+  "keywords": [
+    "authentication"
+  ],
+  "authors": [
+    {
+      "name": "frowhy",
+      "email": "frowhy@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=5.6"
+  },
+  "autoload": {
+    "psr-4": {
+      "Frowhy\\Authentication\\": "src/"
+    }
+  }
+}
