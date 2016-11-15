@@ -37,7 +37,7 @@ class Authentication
     {
         $DES3 = new DES3();
         $time = TimeMillis::getTimeMillis();
-        $timeHash = hash_pbkdf2($time);
+        $timeHash = password_hash($time, PASSWORD_BCRYPT);
         $timeHashEncode = base64_encode($timeHash);
         $sign = $DES3->setKey($salt)->encrypt($str);
         $merge = $time . $timeHashEncode . $sign . $salt;
@@ -72,7 +72,7 @@ class Authentication
         $timeHashEncode = substr($string, 13, 81);
         $timeHash = base64_decode($timeHashEncode);
 //        var_dump(['time' => $time, 'timeHash' => $timeHash, 'timeHashEncode' => $timeHashEncode, 'token' => $token]);
-        return TimeMillis::getTimeMillis() - $time < self::$__overtime && hash_equals($time, $timeHash);
+        return TimeMillis::getTimeMillis() - $time < self::$__overtime && password_verify($time, $timeHash);
     }
 
     /**
