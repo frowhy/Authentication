@@ -14,19 +14,36 @@
  * Time: 17:05
  */
 
-use Frowhy\Authentication\Authentication;
+use Frowhy\Authentication\AuthenticationSSL;
 
 
 require_once __DIR__ . '/vendor/autoload.php';
 //header('Content-type: application/json');
 
 $str = 'aaa';
-$salt = 'z$d$CtX$W3rX27U1%l&HcOk!Or6ogj7Q';
-$make = Authentication::make($str, $salt);
-//$make = 'UTdqZ282ck8ha09jSCZsJTFVNzJYcjNXJFh0QyRkJHo9Y1EvRlA5K3dGZEFsTmxlS0ZHYkdSVlVUZFdUWHAxWWFSemRGOWtUemdEYWtsbk5tWmtXMjkwUTBkRFpqTjFkREpFTnk4R05GSmpNTVZYYzBwRkp3RURKaEpESjU0MTQ0NjU2MTk3NDE=';
-$state = Authentication::verify($make);
-$sign = Authentication::get($make, $salt);
+//$salt = 'z$d$CtX$W3rX27U1%l&HcOk!Or6ogj7Q';
+//$make = Authentication::make($str, $salt);
+////$make = 'UTdqZ282ck8ha09jSCZsJTFVNzJYcjNXJFh0QyRkJHo9Y1EvRlA5K3dGZEFsTmxlS0ZHYkdSVlVUZFdUWHAxWWFSemRGOWtUemdEYWtsbk5tWmtXMjkwUTBkRFpqTjFkREpFTnk4R05GSmpNTVZYYzBwRkp3RURKaEpESjU0MTQ0NjU2MTk3NDE=';
+//$state = Authentication::verify($make);
+//$sign  = Authentication::get($make, $salt);
 
 //echo json_encode(['make' => $make, 'state' => $state, 'sign' => $sign]);
 //var_dump(array('make' => $make, 'state' => $state, 'sign' => $sign));
-var_dump(PasswordCompat\binary\check());
+//var_dump(PasswordCompat\binary\check());
+//exit;
+
+/**
+ * 7.1.0 Example
+ */
+if (FALSE === version_compare('7.1.0', PHP_VERSION, '>=') || FALSE === extension_loaded('openssl')) {
+    die;
+}
+$keys  = [
+    'private_key' => dirname(__FILE__) . '/rsa_private_key.pem',
+    'public_key'  => dirname(__FILE__) . '/rsa_public_key.pem',
+];
+$make  = AuthenticationSSL::make($str, $keys);
+$state = AuthenticationSSL::verify($make);
+$sign  = AuthenticationSSL::get($make, $keys);
+//echo json_encode(['make' => $make, 'state' => $state, 'sign' => $sign]);
+var_dump(['make' => $make, 'state' => $state, 'sign' => $sign]);

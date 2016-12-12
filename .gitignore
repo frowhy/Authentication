@@ -10,3 +10,5 @@ composer.lock
 
 # IntelliJ project files
 .idea
+/rsa_private_key.pem
+/rsa_public_key.pem

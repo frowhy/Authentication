@@ -20,6 +20,7 @@ namespace Frowhy\Authentication;
 /**
  * Class Token
  * @package Frowhy\Libraries
+ * @deprecated 7.1
  */
 class Authentication
 {
