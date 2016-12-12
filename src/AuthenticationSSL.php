@@ -56,7 +56,7 @@ class AuthenticationSSL
             $string = implode('', $array);
             $token  = base64_encode($string);
 
-            var_dump(['time' => $time, 'timeHash' => $timeHash, 'timeHashEncode' => $timeHashEncode, 'token' => $token, 'sign' => $sign]);
+//            var_dump(['time' => $time, 'timeHash' => $timeHash, 'timeHashEncode' => $timeHashEncode, 'token' => $token, 'sign' => $sign]);
 
             return $token;
         } else {
