@@ -56,7 +56,7 @@ class AuthenticationSSL
             $string = implode('', $array);
             $token  = base64_encode($string);
 
-//            var_dump(['time' => $time, 'timeHash' => $timeHash, 'timeHashEncode' => $timeHashEncode, 'token' => $token, 'sign' => $sign]);
+            //            var_dump(['time' => $time, 'timeHash' => $timeHash, 'timeHashEncode' => $timeHashEncode, 'token' => $token, 'sign' => $sign]);
 
             return $token;
         } else {
@@ -81,7 +81,7 @@ class AuthenticationSSL
         }
         ksort($array);
         $string         = implode('', $array);
-        $time           = substr($string, 0, 13);
+        $time           = (int)substr($string, 0, 13);
         $timeHashEncode = substr($string, 13, 81);
         $timeHash       = base64_decode($timeHashEncode);
 
