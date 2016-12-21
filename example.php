@@ -20,7 +20,7 @@ use Frowhy\Authentication\AuthenticationSSL;
 require_once __DIR__ . '/vendor/autoload.php';
 //header('Content-type: application/json');
 
-$str = 'aaa';
+$str = 'b2StCBQ3V1Cfqz2AQ@GaDWD!3ex!@vwQ';
 //$salt = 'z$d$CtX$W3rX27U1%l&HcOk!Or6ogj7Q';
 //$make = Authentication::make($str, $salt);
 ////$make = 'UTdqZ282ck8ha09jSCZsJTFVNzJYcjNXJFh0QyRkJHo9Y1EvRlA5K3dGZEFsTmxlS0ZHYkdSVlVUZFdUWHAxWWFSemRGOWtUemdEYWtsbk5tWmtXMjkwUTBkRFpqTjFkREpFTnk4R05GSmpNTVZYYzBwRkp3RURKaEpESjU0MTQ0NjU2MTk3NDE=';

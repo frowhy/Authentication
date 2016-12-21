@@ -38,13 +38,12 @@ class AuthenticationSSL
      */
     public static function make($str, $keys)
     {
-        if (TRUE === array_key_exists('private_key', $keys) && TRUE === array_key_exists('public_key', $keys)) {
+        if (TRUE === array_key_exists('public_key', $keys)) {
             $openSSL        = new OpenSSL();
             $time           = TimeMillis::getTimeMillis();
             $timeHash       = password_hash($time, PASSWORD_BCRYPT);
             $timeHashEncode = base64_encode($timeHash);
             $sign           = $openSSL
-                ->setPrivateKey($keys['private_key'])
                 ->setPublicKey($keys['public_key'])
                 ->encrypt($str);
             $merge          = $time . $timeHashEncode . $sign;
@@ -98,7 +97,7 @@ class AuthenticationSSL
      */
     public static function get($token, $keys)
     {
-        if (FALSE === empty($token) && TRUE === array_key_exists('private_key', $keys) && TRUE === array_key_exists('public_key', $keys)) {
+        if (FALSE === empty($token) && TRUE === array_key_exists('private_key', $keys)) {
             $openSSL      = new OpenSSL();
             $stringDeCode = base64_decode($token);
             $num          = strlen($stringDeCode);
@@ -110,7 +109,6 @@ class AuthenticationSSL
             $encrypted = substr($string, 93, $num - 93);
             $sign      = $openSSL
                 ->setPrivateKey($keys['private_key'])
-                ->setPublicKey($keys['public_key'])
                 ->decrypt($encrypted);
 
             //        var_dump(['$DES3Str' => $DES3Str, '$DES3Salt' => $DES3Salt, '$sign' => $sign]);
